@@ -1,0 +1,2 @@
+model_checkpoint_path: "test1.mode"
+all_model_checkpoint_paths: "test1.mode"
