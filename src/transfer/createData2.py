@@ -65,9 +65,13 @@ def read_data(file_name):
 
 
 if __name__ == '__main__':
-    train_data, train_label = create_data(start=0, stop=100, num=2110, w=1)
-    print('train data shape {0}' .format(train_data.shape))
-    print('train label shape {0}'.format(train_label.shape))
+    # train_data, train_label = create_data(start=0, stop=100, num=2110, w=1)
+    # print('train data shape {0}' .format(train_data.shape))
+    # print('train label shape {0}'.format(train_label.shape))
+
+    transfer_dir = '../../model/'
+    model_path = os.path.normpath(os.path.join(transfer_dir, '1'))
+    print('model path: {0}'.format(model_path))
 
     # train_label = train_label.reshape((-1, 1, 1))
     # result = np.concatenate([train_data, train_label], axis=2)

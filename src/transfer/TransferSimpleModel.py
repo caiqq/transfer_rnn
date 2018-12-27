@@ -23,6 +23,7 @@ class TransferSimpleModel(object):
 
     def __init__(self,
                  session,
+                 source_size,
                  model_source,
                  source_seq_len,
                  target_seq_len,
@@ -72,9 +73,9 @@ class TransferSimpleModel(object):
         self.test_writer = tf.summary.FileWriter(os.path.normpath(os.path.join('../../summaries_dir/', 'test')))
 
         # === Create the RNN that will keep the state ===
-        print('rnn_size = {0}'.format(rnn_size))
         cell = tf.contrib.rnn.GRUCell(self.rnn_size)
 
+        # create multi layer rnn model
         if num_layers > 1:
             cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size) for _ in range(num_layers)])
 
@@ -105,7 +106,6 @@ class TransferSimpleModel(object):
             self.w_s = []
             # self.v_s = []
 
-            source_size = 1
             for source_index in range(source_size):
                 w_h = vs.get_variable("TL_w_h_source_{0}".format(source_index), shape=[1, self.batch_size])
                 # v_h = vs.get_variable("TL_v_h_source_{0}".format(FLAGS.transfer_actions), shape=[self.input_size, 1])
@@ -120,7 +120,7 @@ class TransferSimpleModel(object):
             # for target:
             self.w_t_h = vs.get_variable("TL_w_h_target", shape=[1, self.batch_size])
             # self.v_t_h = vs.get_variable("TL_v_h_target", shape=[self.input_size, 1])
-            self.w_t_s = vs.get_variable("TL_w_s_target", shape=[1, self.size])
+            self.w_t_s = vs.get_variable("TL_w_s_target", shape=[1, self.batch_size])
             # self.v_t_s = vs.get_variable("TL_v_s_target", shape=[self.rnn_size, 1])
             session.run(tf.global_variables_initializer())
 
@@ -144,7 +144,7 @@ class TransferSimpleModel(object):
         # Build the RNN
         print(self.cell)
         with vs.variable_scope("basic_rnn_seq2seq"):
-            outputs, self.states = Transfer_rnn_gate.static_rnn(session, model_source, self.w_h, self.w_s,
+            self.outputs, self.states = Transfer_rnn_gate.static_rnn(session, source_size, model_source, self.w_h, self.w_s,
                                                                 self.w_t_h, self.w_t_s, self.cell, x_p, dtype=tf.float32)
 
             # outputs, self.states = Transfer_rnn_gate.static_rnn(session, model_source, self.w_h, self.v_h, self.w_s,
@@ -152,7 +152,7 @@ class TransferSimpleModel(object):
             #                                                     self.w_t_h, self.v_t_h, self.w_t_s, self.v_t_s, cell,
             #                                                     x_p,
             #                                                     dtype=tf.float32)
-        self.outputs = outputs
+        # self.outputs = outputs
 
         with tf.name_scope("loss_angles"):
             loss_angles = tf.reduce_mean(tf.square(tf.subtract(y_p, outputs)))

@@ -11,7 +11,7 @@ train_dir = os.path.normpath(os.path.join('../../model/', 'train/'))
 
 
 def create_model(session, seq_length_in, seq_length_out, size, num_layers, max_gradient_norm, batch_size,
-                 learning_rate, learning_rate_decay_factor, load=0, transfer=0):
+                 learning_rate, learning_rate_decay_factor, load=0, transfer=0, source_size=1):
 
     if transfer > 0:
         model_source = SimpleModel.SimpleModel(
@@ -28,6 +28,7 @@ def create_model(session, seq_length_in, seq_length_out, size, num_layers, max_g
         print('model_source finished!')
         model_target = TransferSimpleModel.TransferSimpleModel(
             session,
+            source_size,
             model_source,
             seq_length_in,
             seq_length_out,
@@ -83,7 +84,7 @@ def create_model(session, seq_length_in, seq_length_out, size, num_layers, max_g
 
 
 def train():
-    transfer = 0
+    transfer = 1
     train_data, train_label = createData2.create_data(start=0, stop=15, num=500, w=1)
     seq_length_in = 30
     seq_length_out = 1
@@ -93,16 +94,20 @@ def train():
     learning_rate_decay_factor = 0.95
     num_layers = 1
     size = 1
-    learning_rate_step = 500
+    learning_rate_step = 128
     save_every = 128
 
     load = 0
+
+    iterations = 200
+
+    source_size = 1
 
     with tf.Session() as sess:
         print("Creating %d layers of %d units." % (num_layers, size))
 
         model = create_model(sess, seq_length_in, seq_length_out, size, num_layers, max_gradient_norm,
-                             batch_size, learning_rate, learning_rate_decay_factor, load, transfer)
+                             batch_size, learning_rate, learning_rate_decay_factor, load, transfer, source_size)
         model.train_writer.add_graph(sess.graph)
         print("Model created")
 
@@ -111,25 +116,29 @@ def train():
         previous_losses = []
 
         step_time, loss = 0, 0
-        iterations = 200
+
         for j in range(iterations):
 
             start_time = time.time()
 
             # === Training step ===
             encoder_inputs = train_data[j:(j + 1)].reshape(30, 1),
-            print(encoder_inputs[0].shape)
+            # print('encoder_input: {0}' .format(encoder_inputs[0]))
+            # print(encoder_inputs[0].shape)
             decoder_outputs = train_label[j:(j + 1)]
+            # print('decoder_outputs: {0}'.format(decoder_outputs[0]))
+            # print(decoder_outputs.shape)
 
             _, step_loss, loss_summary, lr_summary = model.step(sess, encoder_inputs[0], decoder_outputs[0], False)
+
             model.train_writer.add_summary(loss_summary, current_step)
             model.train_writer.add_summary(lr_summary, current_step)
 
-            if current_step % 10 == 0:
+            if current_step % 50 == 0:
                 print("step {0:04d}; step_loss: {1:.4f}".format(current_step, step_loss))
 
-            step_time += (time.time() - start_time) / batch_size
-            loss += step_loss / batch_size
+            step_time += (time.time() - start_time) / size
+            loss += step_loss / size
             current_step += 1
 
             # === step decay ===
@@ -159,7 +168,8 @@ def train():
                       "--------------------------\n"
                       "Val loss:            %.4f\n"
                       "============================" % (model.global_step.eval(),
-                                                        model.learning_rate.eval(), step_time * 1000, loss,
+                                                        model.learning_rate.eval(),
+                                                        step_time * 1000, loss,
                                                         val_loss))
                 print()
 

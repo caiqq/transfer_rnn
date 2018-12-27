@@ -33,8 +33,8 @@ class SimpleModel(object):
         """Create the model.
 
         Args:
-          source_seq_len: lenght of the input sequence.
-          target_seq_len: lenght of the target sequence.
+          source_seq_len: length of the input sequence.
+          target_seq_len: length of the target sequence.
           rnn_size: number of units in the rnn.
           num_layers: number of rnns to stack.
           max_gradient_norm: gradients will be clipped to maximally this norm.
@@ -44,9 +44,6 @@ class SimpleModel(object):
           learning_rate: learning rate to start with.
           learning_rate_decay_factor: decay learning rate by this much when needed.
           summaries_dir: where to log progress for tensorboard.
-          loss_to_use: [supervised, sampling_based]. Whether to use ground truth in
-            each timestep to compute the loss after decoding, or to feed back the
-            prediction from the previous time-step.
           residual_velocities: whether to use a residual connection that models velocities.
           dtype: the data type to use to store internal variables.
         """
@@ -60,15 +57,16 @@ class SimpleModel(object):
         self.batch_size = batch_size
         self.learning_rate = tf.Variable(float(learning_rate), trainable=False, dtype=dtype)
         self.learning_rate_decay_op = self.learning_rate.assign(self.learning_rate * learning_rate_decay_factor)
+
         self.global_step = tf.Variable(0, trainable=False)
 
         self.train_writer = tf.summary.FileWriter(os.path.normpath(os.path.join('../../summaries_dir/', 'train')))
         self.test_writer = tf.summary.FileWriter(os.path.normpath(os.path.join('../../summaries_dir/', 'test')))
 
         # === Create the RNN that will keep the state ===
-        print('rnn_size = {0}'.format(rnn_size))
         cell = tf.contrib.rnn.GRUCell(self.rnn_size)
 
+        # check whether to create multi layers
         if num_layers > 1:
             cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size) for _ in range(num_layers)])
 
@@ -79,7 +77,8 @@ class SimpleModel(object):
 
         self.encoder_inputs = x_p
         self.decoder_outputs = y_p
-        # linear warapper after GRU, make the output of GRU has the same dimension as input for residual connedction
+
+        # linear wrapper after GRU, make the output of GRU has the same dimension as input for residual connection
         cell = rnn_cell_extensions.LinearSpaceDecoderWrapper(cell, self.input_size)
 
         # scope.reuse_variable()
@@ -150,7 +149,7 @@ class SimpleModel(object):
                       self.decoder_outputs: decoder_outputs}
 
         # Output feed: depends on whether we do a backward step or not.
-        print(self.encoder_inputs)
+
         if not srnn_seeds:
             if not forward_only:
 

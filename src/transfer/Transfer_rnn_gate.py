@@ -1085,6 +1085,7 @@ def raw_rnn(cell, loop_fn,
 
 
 def static_rnn(session,
+               source_size,
                model_source,
                w_h,
                w_s,
@@ -1172,6 +1173,7 @@ def static_rnn(session,
 
         # Obtain the first sequence of the input
         first_input = inputs
+        print('first_input: {0}'.format(first_input))
         while nest.is_sequence(first_input):
             first_input = first_input[0]
 
@@ -1253,7 +1255,7 @@ def static_rnn(session,
             output_list = []
             transfer_dir = '../../model/'
 
-            for source_index in range(1):
+            for source_index in range(source_size):
                 model_path = os.path.normpath(os.path.join(transfer_dir, source_index))
 
                 state_list, output_list = TL_get_source_states(model_path, model_source, session, input_, Tstate,
