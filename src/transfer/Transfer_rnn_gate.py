@@ -1173,34 +1173,38 @@ def static_rnn(session,
 
         # Obtain the first sequence of the input
         first_input = inputs
-        print('first_input: {0}'.format(first_input))
-        while nest.is_sequence(first_input):
-            first_input = first_input[0]
+
+        # while nest.is_sequence(first_input):
+        #     first_input = first_input[0]
 
         # Temporarily avoid EmbeddingWrapper and seq2seq badness
         # TODO(lukaszkaiser): remove EmbeddingWrapper
-        if first_input.get_shape().ndims != 1:
+        # if first_input.get_shape().ndims != 1:
+        #
+        #     input_shape = first_input.get_shape().with_rank_at_least(2)
+        #     fixed_batch_size = input_shape[0]
+        #
+        #     flat_inputs = nest.flatten(inputs)
+        #     for flat_input in flat_inputs:
+        #         input_shape = flat_input.get_shape().with_rank_at_least(2)
+        #         batch_size, input_size = input_shape[0], input_shape[1:]
+        #         fixed_batch_size.merge_with(batch_size)
+        #         for i, size in enumerate(input_size):
+        #             if size.value is None:
+        #                 raise ValueError(
+        #                     "Input size (dimension %d of inputs) must be accessible via "
+        #                     "shape inference, but saw value None." % i)
+        # else:
+        #     fixed_batch_size = first_input.get_shape().with_rank_at_least(1)[0]
+        #
+        # if fixed_batch_size.value:
+        #     batch_size = fixed_batch_size.value
+        # else:
+        #     batch_size = array_ops.shape(first_input)[0]
 
-            input_shape = first_input.get_shape().with_rank_at_least(2)
-            fixed_batch_size = input_shape[0]
+        batch_size = inputs.shape
+        fixed_batch_size = inputs.shape
 
-            flat_inputs = nest.flatten(inputs)
-            for flat_input in flat_inputs:
-                input_shape = flat_input.get_shape().with_rank_at_least(2)
-                batch_size, input_size = input_shape[0], input_shape[1:]
-                fixed_batch_size.merge_with(batch_size)
-                for i, size in enumerate(input_size):
-                    if size.value is None:
-                        raise ValueError(
-                            "Input size (dimension %d of inputs) must be accessible via "
-                            "shape inference, but saw value None." % i)
-        else:
-            fixed_batch_size = first_input.get_shape().with_rank_at_least(1)[0]
-
-        if fixed_batch_size.value:
-            batch_size = fixed_batch_size.value
-        else:
-            batch_size = array_ops.shape(first_input)[0]
         if initial_state is not None:
             Tstate = initial_state
         else:
@@ -1208,6 +1212,7 @@ def static_rnn(session,
                 raise ValueError("If no initial_state is provided, "
                                  "dtype must be specified")
             Tstate = cell.zero_state(batch_size, dtype)
+            Tstate = Tstate[:, :, 0]
 
         if sequence_length is not None:  # Prepare variables
             sequence_length = ops.convert_to_tensor(
@@ -1241,31 +1246,35 @@ def static_rnn(session,
             max_sequence_length = 0
             zero_output = 0
 
-        for time, input_ in enumerate(inputs):
-            if time > 0:
-                varscope.reuse_variables()
-                # pylint: disable=cell-var-from-loop
-            call_cell = lambda: cell(input_, Tstate)
-            # pylint: enable=cell-var-from-loop
-            (Toutput, Tstate) = cal_out_state(sequence_length, time, min_sequence_length, max_sequence_length,
-                                              zero_output, Tstate, call_cell,
-                                              cell)
+        print('input: {0}'.format(inputs.shape))
 
-            state_list = []
-            output_list = []
-            transfer_dir = '../../model/'
+        time = 0
+        input_ = inputs
 
-            for source_index in range(source_size):
-                model_path = os.path.normpath(os.path.join(transfer_dir, source_index))
+        if time > 0:
+            varscope.reuse_variables()
+            # pylint: disable=cell-var-from-loop
+        call_cell = lambda: cell(input_, Tstate)
+        # pylint: enable=cell-var-from-loop
+        (Toutput, Tstate) = cal_out_state(sequence_length, time, min_sequence_length, max_sequence_length,
+                                          zero_output, Tstate, call_cell,
+                                          cell)
 
-                state_list, output_list = TL_get_source_states(model_path, model_source, session, input_, Tstate,
-                                                               sequence_length,
-                                                               time, min_sequence_length, max_sequence_length,
-                                                               zero_output,
-                                                               state_list, output_list)
-            # get final states based on the source states list.
-            output, Tstate = TL_get_final_output(w_h, w_s, w_t_h, Toutput, w_t_s, Tstate, state_list, output_list)
-            outputs.append(output)
+        state_list = []
+        output_list = []
+        transfer_dir = '../../model/train/'
+
+        for source_index in range(source_size):
+            model_path = os.path.normpath(os.path.join(transfer_dir, "model-"+str(source_index+1)))
+
+            state_list, output_list = TL_get_source_states(model_path, model_source, session, input_, Tstate,
+                                                           sequence_length,
+                                                           time, min_sequence_length, max_sequence_length,
+                                                           zero_output,
+                                                           state_list, output_list)
+        # get final states based on the source states list.
+        output, Tstate = TL_get_final_output(w_h, w_s, w_t_h, Toutput, w_t_s, Tstate, state_list, output_list)
+        outputs.append(output)
 
         return (outputs, Tstate)
 
@@ -1302,6 +1311,8 @@ def TL_get_source_states(model_path, model_source, session, input_, state, seque
 
 
 def TL_get_final_output(w_h, w_s, w_t_h, Toutput, w_t_s, Tstate, state_list, output_list):
+    print('w_h shape: {0}'.format(len(w_h)))
+    print('output_list shape: {0}'.format(len(output_list)))
     for j in range(len(output_list)):
         h1 = tf.matmul(w_h[j], output_list[j])
         s1 = tf.multiply(w_s[j], state_list[j])

@@ -66,8 +66,8 @@ def create_model(session, seq_length_in, seq_length_out, size, num_layers, max_g
         if ckpt and ckpt.model_checkpoint_path:
             # Check if the specific checkpoint exists
             if load > 0:
-                if os.path.isfile(os.path.join(train_dir, "checkpoint-{0}.index".format(load))):
-                    ckpt_name = os.path.normpath(os.path.join(os.path.join(train_dir, "checkpoint-{0}".format(load))))
+                if os.path.isfile(os.path.join(train_dir, str(load))):
+                    ckpt_name = os.path.normpath(os.path.join(os.path.join(train_dir, str(load))))
                 else:
                     raise ValueError("Asked to load checkpoint {0}, but it does not seem to exist".format(load))
             else:
@@ -85,6 +85,7 @@ def create_model(session, seq_length_in, seq_length_out, size, num_layers, max_g
 
 def train():
     transfer = 1
+
     train_data, train_label = createData2.create_data(start=0, stop=15, num=500, w=1)
     seq_length_in = 30
     seq_length_out = 1
@@ -99,7 +100,7 @@ def train():
 
     load = 0
 
-    iterations = 200
+    iterations = 400
 
     source_size = 1
 
@@ -176,11 +177,12 @@ def train():
                 previous_losses.append(loss)
 
                 # Save the model
+                source_index = 1
                 if current_step % save_every == 0:
                     print("Saving the model...");
                     start_time = time.time()
-                    model.saver.save(sess, os.path.normpath(os.path.join(train_dir, 'checkpoint')),
-                                     global_step=current_step)
+                    model.saver.save(sess, os.path.normpath(os.path.join(train_dir, 'model')),
+                                     global_step=source_index)
                     print("done in {0:.2f} ms".format((time.time() - start_time) * 1000))
 
                 # Reset global time and loss
