@@ -73,11 +73,14 @@ class TransferSimpleModel(object):
         self.test_writer = tf.summary.FileWriter(os.path.normpath(os.path.join('../../summaries_dir/', 'test')))
 
         # === Create the RNN that will keep the state ===
-        cell = tf.contrib.rnn.GRUCell(self.rnn_size)
+        # cell = tf.contrib.rnn.GRUCell(self.rnn_size)
+        cell = tf.contrib.rnn.BasicLSTMCell(self.rnn_size, state_is_tuple=True)
 
         # create multi layer rnn model
         if num_layers > 1:
-            cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size) for _ in range(num_layers)])
+            # cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size) for _ in range(num_layers)])
+            cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.BasicLSTMCell(self.rnn_size, state_is_tuple=True)
+                                                for _ in range(num_layers)])
 
         # === Transform the inputs ===
         with tf.name_scope("inputs_"):
@@ -144,9 +147,13 @@ class TransferSimpleModel(object):
         # Build the RNN
         print(self.cell)
         with vs.variable_scope("basic_rnn_seq2seq"):
-            self.outputs, self.states = Transfer_rnn_gate.static_rnn(session, source_size, model_source, self.w_h, self.w_s,
-                                                                self.w_t_h, self.w_t_s, self.cell, x_p, dtype=tf.float32)
+            # self.outputs, self.states = Transfer_rnn_gate.static_rnn(session, source_size, model_source, self.w_h, self.w_s,
+            #                                                     self.w_t_h, self.w_t_s, self.cell, x_p, dtype=tf.float32)
 
+            self.outputs, self.states = Transfer_rnn_gate.static_lstm_rnn(session, source_size, model_source, self.w_h,
+                                                                     self.w_s,
+                                                                     self.w_t_h, self.w_t_s, self.cell, x_p,
+                                                                     dtype=tf.float32)
             # outputs, self.states = Transfer_rnn_gate.static_rnn(session, model_source, self.w_h, self.v_h, self.w_s,
             #                                                     self.v_s,
             #                                                     self.w_t_h, self.v_t_h, self.w_t_s, self.v_t_s, cell,

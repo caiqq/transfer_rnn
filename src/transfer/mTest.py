@@ -194,3 +194,4 @@ def train():
 if __name__ == '__main__':
     print('begin train')
     train()
+tf.contrib.rnn

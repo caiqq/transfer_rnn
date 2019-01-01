@@ -64,11 +64,14 @@ class SimpleModel(object):
         self.test_writer = tf.summary.FileWriter(os.path.normpath(os.path.join('../../summaries_dir/', 'test')))
 
         # === Create the RNN that will keep the state ===
-        cell = tf.contrib.rnn.GRUCell(self.rnn_size)
+        # cell = tf.contrib.rnn.GRUCell(self.rnn_size)
+        cell = tf.contrib.rnn.BasicLSTMCell(self.rnn_size, state_is_tuple=True)
 
         # check whether to create multi layers
         if num_layers > 1:
-            cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size) for _ in range(num_layers)])
+            # cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size) for _ in range(num_layers)])
+            cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.BasicLSTMCell(self.rnn_size, state_is_tuple=True)
+                                                for _ in range(num_layers)])
 
         # === Transform the inputs ===
         with tf.name_scope("inputs_"):
@@ -79,7 +82,8 @@ class SimpleModel(object):
         self.decoder_outputs = y_p
 
         # linear wrapper after GRU, make the output of GRU has the same dimension as input for residual connection
-        cell = rnn_cell_extensions.LinearSpaceDecoderWrapper(cell, self.input_size)
+
+        # cell = rnn_cell_extensions.LinearSpaceDecoderWrapper(cell, self.input_size)
 
         # scope.reuse_variable()
 
