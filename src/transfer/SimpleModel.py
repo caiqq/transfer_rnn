@@ -64,14 +64,14 @@ class SimpleModel(object):
         self.test_writer = tf.summary.FileWriter(os.path.normpath(os.path.join('../../summaries_dir/', 'test')))
 
         # === Create the RNN that will keep the state ===
-        # cell = tf.contrib.rnn.GRUCell(self.rnn_size)
-        cell = tf.contrib.rnn.BasicLSTMCell(self.rnn_size, state_is_tuple=True)
+        cell = tf.contrib.rnn.GRUCell(self.rnn_size)
+        # cell = tf.contrib.rnn.LSTMCell(self.rnn_size, state_is_tuple=True)
 
         # check whether to create multi layers
         if num_layers > 1:
-            # cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size) for _ in range(num_layers)])
-            cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.BasicLSTMCell(self.rnn_size, state_is_tuple=True)
-                                                for _ in range(num_layers)])
+            cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size[i]) for i in range(num_layers)])
+            # cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.LSTMCell(self.rnn_size, state_is_tuple=True)
+            #                                     for _ in range(num_layers)])
 
         # === Transform the inputs ===
         with tf.name_scope("inputs_"):
@@ -165,6 +165,7 @@ class SimpleModel(object):
                                self.learning_rate_summary]
 
                 outputs = session.run(output_feed, input_feed)
+
                 return outputs[1], outputs[2], outputs[3], outputs[4]  # Gradient norm, loss, summaries
 
             else:

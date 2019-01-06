@@ -73,28 +73,17 @@ class TransferSimpleModel(object):
         self.test_writer = tf.summary.FileWriter(os.path.normpath(os.path.join('../../summaries_dir/', 'test')))
 
         # === Create the RNN that will keep the state ===
-        # cell = tf.contrib.rnn.GRUCell(self.rnn_size)
-        cell = tf.contrib.rnn.BasicLSTMCell(self.rnn_size, state_is_tuple=True)
+        cell = tf.contrib.rnn.GRUCell(self.rnn_size)
+        # cell = tf.contrib.rnn.LSTMCell(self.rnn_size, state_is_tuple=True)
 
         # create multi layer rnn model
         if num_layers > 1:
-            # cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size) for _ in range(num_layers)])
-            cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.BasicLSTMCell(self.rnn_size, state_is_tuple=True)
-                                                for _ in range(num_layers)])
+            cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.GRUCell(self.rnn_size[i]) for i in range(num_layers)])
+            # cell = tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.LSTMCell(self.rnn_size, state_is_tuple=True)
+            #                                     for _ in range(num_layers)])
 
         # === Transform the inputs ===
         with tf.name_scope("inputs_"):
-            # enc_in = tf.placeholder(dtype, shape=[None, source_seq_len - 1, self.input_size], name="enc_in")
-            # print('enc_in0: {0}' .format(type(enc_in)))
-            #
-            # enc_in = tf.transpose(enc_in, [1, 0, 2])
-            # print('enc_in1: {0}' .format(type(enc_in)))
-            #
-            # enc_in = tf.reshape(enc_in, [-1, self.input_size])
-            # print('enc_in2: {0}' .format(type(enc_in)))
-            #
-            # enc_in = tf.split(enc_in, source_seq_len - 1, axis=0)
-            # print(type(enc_in))
 
             x_p = tf.placeholder(dtype=tf.float32, shape=(source_seq_len, 1), name="input_placeholder")
             y_p = tf.placeholder(dtype=tf.float32, shape=(1), name="pred_placeholder")
@@ -108,23 +97,27 @@ class TransferSimpleModel(object):
             # self.v_h = []
             self.w_s = []
             # self.v_s = []
+            self.w_b = []
 
             for source_index in range(source_size):
                 w_h = vs.get_variable("TL_w_h_source_{0}".format(source_index), shape=[1, self.source_seq_len])
                 # v_h = vs.get_variable("TL_v_h_source_{0}".format(FLAGS.transfer_actions), shape=[self.input_size, 1])
                 w_s = vs.get_variable("TL_w_s_source_{0}".format(source_index), shape=[1, self.source_seq_len])
                 # v_s = vs.get_variable("TL_v_s_source_{0}".format(FLAGS.transfer_actions), shape=[self.rnn_size, 1])
+                w_b = vs.get_variable("TL_w_b_source_{0}".format(source_index), shape=[1])
 
                 self.w_h.append(w_h)
                 # self.v_h.append(v_h)
                 self.w_s.append(w_s)
                 # self.v_s.append(v_s)
+                self.w_b.append(w_b)
 
             # for target:
             self.w_t_h = vs.get_variable("TL_w_h_target", shape=[1, self.source_seq_len])
             # self.v_t_h = vs.get_variable("TL_v_h_target", shape=[self.input_size, 1])
             self.w_t_s = vs.get_variable("TL_w_s_target", shape=[1, self.source_seq_len])
             # self.v_t_s = vs.get_variable("TL_v_s_target", shape=[self.rnn_size, 1])
+            self.w_t_b = vs.get_variable("TL_w_b_target", shape=[1])
             session.run(tf.global_variables_initializer())
 
         # linear warapper after GRU, make the output of GRU has the same dimension as input for residual connedction
@@ -145,19 +138,17 @@ class TransferSimpleModel(object):
         #   raise(ValueError, "unknown loss: %s" % loss_to_use)
 
         # Build the RNN
-        print(self.cell)
         with vs.variable_scope("basic_rnn_seq2seq"):
-            # self.outputs, self.states = Transfer_rnn_gate.static_rnn(session, source_size, model_source, self.w_h, self.w_s,
-            #                                                     self.w_t_h, self.w_t_s, self.cell, x_p, dtype=tf.float32)
+            tf.nn.static_rnn()
+            self.outputs, self.states = Transfer_rnn_gate.static_rnn(session, source_size, model_source, self.w_h, self.w_s, self.w_b,
+                                                                self.w_t_h, self.w_t_s, self.w_t_b, self.cell, [x_p], dtype=tf.float32)
 
-            self.outputs, self.states = Transfer_rnn_gate.static_lstm_rnn(session, source_size, model_source, self.w_h,
-                                                                     self.w_s,
-                                                                     self.w_t_h, self.w_t_s, self.cell, x_p,
-                                                                     dtype=tf.float32)
-            # outputs, self.states = Transfer_rnn_gate.static_rnn(session, model_source, self.w_h, self.v_h, self.w_s,
-            #                                                     self.v_s,
-            #                                                     self.w_t_h, self.v_t_h, self.w_t_s, self.v_t_s, cell,
-            #                                                     x_p,
+            # self.outputs, self.states = Transfer_rnn_gate.static_lstm_rnn(session, source_size, model_source, self.w_h, self.w_s, self.w_b,
+            #                                                          self.w_t_h, self.w_t_s, self.w_t_b, self.cell, x_p,
+            #                                                          dtype=tf.float32)
+
+            # outputs, self.states = Transfer_rnn_gate.static_rnn(session, model_source, self.w_h, self.w_s, self.w_b,
+            #                                                     self.w_t_h, self.w_t_s, self.w_t_b, cell, x_p,
             #                                                     dtype=tf.float32)
         # self.outputs = outputs
 

@@ -1,3 +1,4 @@
 data/
 model/train/
 model/summaries_dir/
+.idea/

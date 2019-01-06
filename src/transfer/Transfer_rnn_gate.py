@@ -1089,8 +1089,10 @@ def static_rnn(session,
                model_source,
                w_h,
                w_s,
+               w_b,
                w_t_h,
                w_t_s,
+               w_t_b,
                cell,
                inputs,
                initial_state=None,
@@ -1202,8 +1204,8 @@ def static_rnn(session,
         # else:
         #     batch_size = array_ops.shape(first_input)[0]
 
-        batch_size = inputs.shape
-        fixed_batch_size = inputs.shape
+        batch_size = inputs[0]
+        fixed_batch_size = inputs[0]
 
         if initial_state is not None:
             Tstate = initial_state
@@ -1212,7 +1214,11 @@ def static_rnn(session,
                 raise ValueError("If no initial_state is provided, "
                                  "dtype must be specified")
             Tstate = cell.zero_state(batch_size, dtype)
-            Tstate = Tstate[:, :, 0]
+            print('Tstate size: {0} {1} {2}'.format(type(Tstate), Tstate[0].shape, Tstate[1].shape))
+            # Tstate = Tstate[:, :, 0]
+            # Tstate[0] = list(Tstate[0])[:, :, 0]
+            # Tstate[1] = list(Tstate[1])[:, :, 0]
+            # print('Tstate size: {0} {1} {2}'.format(type(Tstate), Tstate[0].shape, Tstate[1].shape))
 
         if sequence_length is not None:  # Prepare variables
             sequence_length = ops.convert_to_tensor(
@@ -1246,14 +1252,15 @@ def static_rnn(session,
             max_sequence_length = 0
             zero_output = 0
 
-        print('input: {0}'.format(inputs.shape))
-
         time = 0
         input_ = inputs
 
         if time > 0:
             varscope.reuse_variables()
             # pylint: disable=cell-var-from-loop
+        print('input_ size: {0} {1}'.format(type(input_), input_.shape))
+        print('Tstate size: {0} {1} {2}'.format(type(Tstate), Tstate[0].shape, Tstate[1].shape))
+        # print('Tstate size: {0} {1}'.format(type(Tstate), Tstate.shape))
         call_cell = lambda: cell(input_, Tstate)
         # pylint: enable=cell-var-from-loop
         (Toutput, Tstate) = cal_out_state(sequence_length, time, min_sequence_length, max_sequence_length,
@@ -1273,7 +1280,10 @@ def static_rnn(session,
                                                            zero_output,
                                                            state_list, output_list)
         # get final states based on the source states list.
-        output, Tstate = TL_get_final_output(w_h, w_s, w_t_h, Toutput, w_t_s, Tstate, state_list, output_list)
+        output, Tstate = TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
+                                             output_list, input_)
+        # output, Tstate = TL_get_final_output2(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
+        #                                      output_list, input_)
         outputs.append(output)
 
         return (outputs, Tstate)
@@ -1284,8 +1294,10 @@ def static_lstm_rnn(session,
                model_source,
                w_h,
                w_s,
+               w_b,
                w_t_h,
                w_t_s,
+               w_t_b,
                cell,
                inputs,
                initial_state=None,
@@ -1451,6 +1463,8 @@ def static_lstm_rnn(session,
         if time > 0:
             varscope.reuse_variables()
             # pylint: disable=cell-var-from-loop
+        print('input_ size: {0} {1}'.format(type(input_), input_.shape))
+        print('Tstate size: {0} {1}'.format(type(Tstate), Tstate.shape))
         call_cell = lambda: cell(input_, Tstate)
         # pylint: enable=cell-var-from-loop
         (Toutput, Tstate) = cal_out_state(sequence_length, time, min_sequence_length, max_sequence_length,
@@ -1470,7 +1484,9 @@ def static_lstm_rnn(session,
                                                            zero_output,
                                                            state_list, output_list)
         # get final states based on the source states list.
-        output, Tstate = TL_get_final_output(w_h, w_s, w_t_h, Toutput, w_t_s, Tstate, state_list, output_list)
+        output, Tstate = TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list, output_list, input_)
+        # output, Tstate = TL_get_final_output2(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
+        #                                      output_list, input_)
         outputs.append(output)
 
         return (outputs, Tstate)
@@ -1507,7 +1523,7 @@ def TL_get_source_states(model_path, model_source, session, input_, state, seque
     # target--put the target to the last ----:
 
 
-def TL_get_final_output(w_h, w_s, w_t_h, Toutput, w_t_s, Tstate, state_list, output_list):
+def TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list, output_list, input_):
     print('w_h shape: {0}'.format(len(w_h)))
     print('output_list shape: {0}'.format(len(output_list)))
     for j in range(len(output_list)):
@@ -1524,6 +1540,32 @@ def TL_get_final_output(w_h, w_s, w_t_h, Toutput, w_t_s, Tstate, state_list, out
     state = tf.tanh(tf.add(state, tf.multiply(w_t_s, Tstate)))
     #   output = tf.tanh(output)
     #  state = tf.tanh(state)
+    return output, state
+
+
+def TL_get_final_output2(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list, output_list, input_):
+    print('w_h shape: {0}'.format(len(w_h)))
+    print('output_list shape: {0}'.format(len(output_list)))
+    num_n = 0
+    for j in range(len(output_list)):
+        h1 = tf.matmul(w_h[j], output_list[j])
+        s1 = tf.multiply(w_s[j], state_list[j])
+        h2 = tf.matmul(w_t_h[j], input_)
+        s2 = tf.multiply(w_t_s[j], input_)
+        v1 = tf.tanh(tf.add(h1, s1, w_b[j]))
+        v2 = tf.tanh(tf.add(h2, s2, w_t_b[j]))
+
+        num_n = num_n + 1
+        if j == 0:
+            values1 = v1
+            values2 = v2
+        else:
+            values1 = tf.add(values1, v1)
+            values2 = tf.add(values2, v2)
+
+    output = tf.add(values1, Toutput)/(num_n + 1)
+    state = tf.add(values2, Tstate)/(num_n + 1)
+
     return output, state
 
 
