@@ -31,7 +31,12 @@ def create_original_data(start=0, stop=100, num=1000, w=1, mu=0, sigma=0.03):
     s = np.random.normal(mu, sigma, sample_no)
 
     seq_train = seq_train + s
+
     return seq_train
+
+    # plt.plot(range(len(seq_train)), seq_train, "r*")
+    # plt.show()
+
 
 
 def draw_data(draw_datas, data_len, file_name):
@@ -94,8 +99,9 @@ def read_data(file_name):
 
 
 if __name__ == '__main__':
-    train_data = create_original_data(start=0, stop=12.56, num=1256, w=1, mu=0, sigma=0.02)
-    file_name = 'data_period100_w1_mu0_sigma002'
+
+    train_data = create_original_data(start=0, stop=12.56, num=1256, w=1, mu=0, sigma=0.01)
+    file_name = 'data_period100_w1_mu0_sigma001'
     save_original_data(file_name, train_data)
     read_data = read_original_data(file_name)
     print(read_data)

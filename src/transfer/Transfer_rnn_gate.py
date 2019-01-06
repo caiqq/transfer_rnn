@@ -1204,8 +1204,8 @@ def static_rnn(session,
         # else:
         #     batch_size = array_ops.shape(first_input)[0]
 
-        batch_size = inputs[0]
-        fixed_batch_size = inputs[0]
+        batch_size = inputs.shape
+        fixed_batch_size = inputs.shape
 
         if initial_state is not None:
             Tstate = initial_state
@@ -1214,8 +1214,8 @@ def static_rnn(session,
                 raise ValueError("If no initial_state is provided, "
                                  "dtype must be specified")
             Tstate = cell.zero_state(batch_size, dtype)
-            print('Tstate size: {0} {1} {2}'.format(type(Tstate), Tstate[0].shape, Tstate[1].shape))
-            # Tstate = Tstate[:, :, 0]
+            # print('Tstate size: {0} {1} {2}'.format(type(Tstate), Tstate[0].shape, Tstate[1].shape))
+            Tstate = Tstate[:, :, 0]
             # Tstate[0] = list(Tstate[0])[:, :, 0]
             # Tstate[1] = list(Tstate[1])[:, :, 0]
             # print('Tstate size: {0} {1} {2}'.format(type(Tstate), Tstate[0].shape, Tstate[1].shape))
@@ -1409,8 +1409,8 @@ def static_lstm_rnn(session,
         # else:
         #     batch_size = array_ops.shape(first_input)[0]
 
-        batch_size = inputs.shape
-        fixed_batch_size = inputs.shape
+        batch_size = len(inputs)
+        fixed_batch_size = len(inputs)
 
         if initial_state is not None:
             Tstate = initial_state

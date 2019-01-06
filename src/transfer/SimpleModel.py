@@ -108,7 +108,7 @@ class SimpleModel(object):
         self.outputs = outputs
 
         with tf.name_scope("loss_angles"):
-            loss_angles = tf.reduce_mean(tf.square(tf.subtract(y_p, outputs)))
+            loss_angles = tf.reduce_mean(tf.square(tf.subtract(y_p, outputs[0][-1])))
 
         self.loss = loss_angles
         self.loss_summary = tf.summary.scalar('loss/loss', self.loss)
@@ -171,10 +171,11 @@ class SimpleModel(object):
             else:
                 # Validation step, not on SRNN's seeds
                 output_feed = [self.loss,  # Loss for this batch.
-                               self.loss_summary]
+                               self.loss_summary,
+                               self.outputs]
 
                 outputs = session.run(output_feed, input_feed)
-                return outputs[0], outputs[1]  # No gradient norm
+                return outputs[0], outputs[1], outputs[2]  # No gradient norm
         else:
             # Validation on SRNN's seeds
             output_feed = [self.loss,  # Loss for this batch.

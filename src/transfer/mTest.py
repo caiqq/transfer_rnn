@@ -83,20 +83,20 @@ def create_model(session, seq_length_in, seq_length_out, size, num_layers, max_g
         return model
 
 
-def train(train_data, train_label, transfer, source_index=1):
-
+def train(train_data, train_label, transfer, test_data, test_label, source_index=1):
+    epoch = 300
     max_gradient_norm = 5
     batch_size = 128
 
     seq_length_in = 30
     seq_length_out = 1
 
-    learning_rate = 0.05
-    learning_rate_decay_factor = 0.95
-    learning_rate_step = 15
+    learning_rate = 0.09
+    learning_rate_decay_factor = 0.985
+    learning_rate_step = 150
 
-    num_layers = 2
-    size = [4, 1]
+    num_layers = 1
+    size = 1
 
     load = 0
 
@@ -110,82 +110,199 @@ def train(train_data, train_label, transfer, source_index=1):
         model.train_writer.add_graph(sess.graph)
         print("Model created")
 
-        current_step = 0 if load <= 0 else load + 1
-        previous_losses = []
+        # === Training step ===
+        # for j in range(2):
+        current_step = 0
+        for epoch_index in range(epoch):
+            current_step = 0
+            previous_losses = []
+            for j in range(len(train_data)-seq_length_in):
+                start_time = time.time()
 
-        step_time, loss = 0, 0
+                encoder_inputs = train_data[j:(j + 1)].reshape(30, 1),
+                decoder_outputs = train_label[j:(j + 1)]
+
+                _, step_loss, loss_summary, lr_summary = model.step(sess, encoder_inputs[0], decoder_outputs[0], False)
+
+                # model.train_writer.add_summary(loss_summary, current_step)
+                # model.train_writer.add_summary(lr_summary, current_step)
+
+                # if current_step % 100 == 0:
+                #     print("step {0:04d}; step_loss: {1:.4f}".format(current_step, step_loss))
+
+                current_step += 1
+
+                # === step decay ===
+                if current_step % learning_rate_step == 0:
+                    sess.run(model.learning_rate_decay_op)
+
+                # Once in a while, we save checkpoint, print statistics, and run evals.
+                # if current_step % batch_size == 0:
+                #
+                #     forward_only = True
+                #     step_loss, loss_summary, output_data = model.step(sess, encoder_inputs[0], decoder_outputs[0], forward_only)
+                #     val_loss = step_loss
+                #
+                #     # model.test_writer.add_summary(loss_summary, current_step)
+                #
+                #     print()
+                #     print("{0: <16} |".format("milliseconds"), end="")
+                #     print()
+                #     print("============================\n"
+                #           "Global step:         %d\n"
+                #           "Learning rate:       %.4f\n"
+                #           "Train loss avg:      %.4f\n"
+                #           "--------------------------\n"
+                #           "Val loss:            %.4f\n"
+                #           "============================" % (model.global_step.eval(),
+                #                                             model.learning_rate.eval(),
+                #                                             loss, val_loss))
+                #     print()
+
+
+                previous_losses.append(step_loss)
+            print('epoch: {0}, train loss: {1}'.format(epoch_index, sum(previous_losses)/len(previous_losses)))
+            epoch_index += 1
+            # test(model, sess)
+            # Save the model
+            if (epoch_index == epoch) & (current_step % (len(train_data)-seq_length_in) == 0):
+                print("current_step = ", current_step)
+                test(model, sess, test_data, test_label)
+
+                print("done in {0:.2f} ms".format((time.time() - start_time) * 1000))
+                model.saver.save(sess, os.path.normpath(os.path.join(train_dir, 'model')),
+                                 global_step=source_index)
+                print("Saving the model...");
+
+            # Reset global time and loss
+            step_time, loss = 0, 0
+
+            sys.stdout.flush()
+
+
+def test(model, sess, test_data, test_label):
+    seq_length_in = 30
+    data_file_name = 'data_period150_w1_mu0_sigma002'
+
+    losses = []
+    for j in range(len(test_label) - seq_length_in):
+
+        encoder_inputs = test_data[j:(j + 1)].reshape(30, 1),
+        decoder_outputs = test_label[j:(j + 1)]
+
+        step_loss, loss_summary, output_data = model.step(sess, encoder_inputs[0], decoder_outputs[0],
+                                                            forward_only=True)
+
+        losses.append(step_loss)
+    mean_loss = sum(losses)/len(losses)
+    print('test loss: ', mean_loss)
+
+def tf_train(train_data_list, train_label_list, transfer, test_data, test_label, source_index=1):
+    epoch = 200
+    max_gradient_norm = 5
+    batch_size = 128
+
+    seq_length_in = 30
+    seq_length_out = 1
+
+    learning_rate = 0.05
+    learning_rate_decay_factor = 0.99
+    learning_rate_step = 150
+
+    num_layers = 1
+    size = 1
+
+    load = 0
+
+    source_size = 1
+
+    with tf.Session() as sess:
+        print("Creating %d layers." % (num_layers))
+
+        model = create_model(sess, seq_length_in, seq_length_out, size, num_layers, max_gradient_norm,
+                             batch_size, learning_rate, learning_rate_decay_factor, load, transfer, source_size)
+        model.train_writer.add_graph(sess.graph)
+        print("Model created")
 
         # === Training step ===
         # for j in range(2):
-        for j in range(len(train_data)-seq_length_in):
-            start_time = time.time()
+        for data_index in range(len(train_data_list)):
+            train_data = train_data_list[data_index]
+            train_label = train_label_list[data_index]
+            current_step = 0
+            for epoch_index in range(epoch):
+                current_step = 0
+                previous_losses = []
+                for j in range(len(train_data)-seq_length_in):
+                    start_time = time.time()
 
-            encoder_inputs = train_data[j:(j + 1)].reshape(30, 1),
-            decoder_outputs = train_label[j:(j + 1)]
+                    encoder_inputs = train_data[j:(j + 1)].reshape(30, 1),
+                    decoder_outputs = train_label[j:(j + 1)]
 
-            _, step_loss, loss_summary, lr_summary = model.step(sess, encoder_inputs[0], decoder_outputs[0], False)
+                    _, step_loss, loss_summary, lr_summary = model.step(sess, encoder_inputs[0], decoder_outputs[0], False)
 
-            # model.train_writer.add_summary(loss_summary, current_step)
-            # model.train_writer.add_summary(lr_summary, current_step)
+                    current_step += 1
 
-            if current_step % 100 == 0:
-                print("step {0:04d}; step_loss: {1:.4f}".format(current_step, step_loss))
+                    # === step decay ===
+                    if current_step % learning_rate_step == 0:
+                        sess.run(model.learning_rate_decay_op)
 
-            loss += step_loss
-            current_step += 1
 
-            # === step decay ===
-            if current_step % learning_rate_step == 0:
-                sess.run(model.learning_rate_decay_op)
+                    previous_losses.append(step_loss)
+                print('epoch: {0}, train loss: {1}'.format(epoch_index, sum(previous_losses)/len(previous_losses)))
+                epoch_index += 1
+            # test(model, sess)
+            # Save the model
+            if (epoch_index == epoch) & (current_step % (len(train_data)-seq_length_in) == 0):
+                print("current_step = ", current_step)
+                test(model, sess, test_data, test_label)
 
-            # Once in a while, we save checkpoint, print statistics, and run evals.
-            if current_step % batch_size == 0:
+                print("done in {0:.2f} ms".format((time.time() - start_time) * 1000))
+                model.saver.save(sess, os.path.normpath(os.path.join(train_dir, 'model')),
+                                 global_step=source_index)
+                print("Saving the model...");
 
-                forward_only = True
-                step_loss, loss_summary = model.step(sess, encoder_inputs[0], decoder_outputs[0], forward_only)
-                val_loss = step_loss
+            # Reset global time and loss
+            step_time, loss = 0, 0
 
-                # model.test_writer.add_summary(loss_summary, current_step)
+            sys.stdout.flush()
 
-                print()
-                print("{0: <16} |".format("milliseconds"), end="")
-                print()
-                print("============================\n"
-                      "Global step:         %d\n"
-                      "Learning rate:       %.4f\n"
-                      "Train loss avg:      %.4f\n"
-                      "--------------------------\n"
-                      "Val loss:            %.4f\n"
-                      "============================" % (model.global_step.eval(),
-                                                        model.learning_rate.eval(),
-                                                        loss, val_loss))
-                print()
-
-                previous_losses.append(loss)
-                # Save the model
-                if current_step % (len(train_data)-seq_length_in) == 0:
-
-                    print("done in {0:.2f} ms".format((time.time() - start_time) * 1000))
-                    model.saver.save(sess, os.path.normpath(os.path.join(train_dir, 'model')),
-                                     global_step=source_index)
-                    print("Saving the model...");
-
-                # Reset global time and loss
-                step_time, loss = 0, 0
-                current_step = current_step + 1
-                sys.stdout.flush()
 
 
 if __name__ == '__main__':
     print('begin train')
-    transfer = 1
+    transfer = 0
     source_index = 1
-    data_file_name = 'data_period50_w1_mu0_sigma004'
 
+    # data_file_name = 'data_period150_w1_mu0_sigma002'
+    #
+    # datas = createData2.read_original_data(data_file_name)
+    # datas = createData2.normalization_data(datas)
+    #
+    # data_len = 75
+    # data_train = datas[0:data_len]
+    # data_test = datas[data_len:]
+    # train_data, train_label = createData2.generate(data_train)
+
+    #
+    data_file_name = 'data_period100_w1_mu0_sigma002'
     datas = createData2.read_original_data(data_file_name)
     datas = createData2.normalization_data(datas)
+    data_len = 155
+    data_train = datas[0:data_len]
+    data_test = datas[data_len:]
+    train_data, train_label = createData2.generate(data_train)
+    #
+    # train_data_list = []
+    # train_label_list = []
+    # train_data_list.append(train_data2)
+    # train_data_list.append(train_data)
+    # train_label_list.append(train_label2)
+    # train_label_list.append(train_label)
 
-    train_data, train_label = createData2.generate(datas)
+    test_data, test_label = createData2.generate(data_test)
     print("train size: {0}".format(len(train_data)))
 
-    train(train_data, train_label, transfer, source_index)
+    train(train_data, train_label, transfer, test_data, test_label, source_index)
+    # tf_train(train_data_list, train_label_list, transfer, test_data, test_label, source_index)
+
