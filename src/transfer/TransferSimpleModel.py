@@ -152,7 +152,7 @@ class TransferSimpleModel(object):
         # self.outputs = outputs
 
         with tf.name_scope("loss_angles"):
-            loss_angles = tf.reduce_mean(tf.square(tf.subtract(y_p, self.outputs[0][-1])))
+            loss_angles = tf.reduce_mean(tf.sqrt(tf.square(tf.subtract(y_p, self.outputs[0][-1]))))
 
         self.loss = loss_angles
         self.loss_summary = tf.summary.scalar('loss/loss', self.loss)
