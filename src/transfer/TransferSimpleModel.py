@@ -66,6 +66,7 @@ class TransferSimpleModel(object):
 
         self.batch_size = batch_size
         self.learning_rate = tf.Variable(float(learning_rate), trainable=False, dtype=dtype)
+        self.learning_rate_decay_factor = learning_rate_decay_factor
         self.learning_rate_decay_op = self.learning_rate.assign(self.learning_rate * learning_rate_decay_factor)
         self.global_step = tf.Variable(0, trainable=False)
 
@@ -73,7 +74,8 @@ class TransferSimpleModel(object):
         self.test_writer = tf.summary.FileWriter(os.path.normpath(os.path.join('../../summaries_dir/', 'test')))
 
         # === Create the RNN that will keep the state ===
-        cell = tf.contrib.rnn.GRUCell(self.rnn_size)
+
+        # cell = tf.contrib.rnn.GRUCell(self.rnn_size)
         # cell = tf.contrib.rnn.LSTMCell(self.rnn_size, state_is_tuple=True)
 
         # create multi layer rnn model
@@ -100,11 +102,14 @@ class TransferSimpleModel(object):
             self.w_b = []
 
             for source_index in range(source_size):
-                w_h = vs.get_variable("TL_w_h_source_{0}".format(source_index), shape=[1, self.source_seq_len])
+                w_h = vs.get_variable("TL_w_h_source_{0}".format(source_index), shape=[1, self.source_seq_len],
+                                      initializer=tf.constant_initializer(0.02))
                 # v_h = vs.get_variable("TL_v_h_source_{0}".format(FLAGS.transfer_actions), shape=[self.input_size, 1])
-                w_s = vs.get_variable("TL_w_s_source_{0}".format(source_index), shape=[1, self.source_seq_len])
+                w_s = vs.get_variable("TL_w_s_source_{0}".format(source_index), shape=[1, self.source_seq_len],
+                                      initializer=tf.constant_initializer(0.02))
                 # v_s = vs.get_variable("TL_v_s_source_{0}".format(FLAGS.transfer_actions), shape=[self.rnn_size, 1])
-                w_b = vs.get_variable("TL_w_b_source_{0}".format(source_index), shape=[1])
+                w_b = vs.get_variable("TL_w_b_source_{0}".format(source_index), shape=[1],
+                                      initializer=tf.constant_initializer(0.02))
 
                 self.w_h.append(w_h)
                 # self.v_h.append(v_h)
@@ -113,15 +118,22 @@ class TransferSimpleModel(object):
                 self.w_b.append(w_b)
 
             # for target:
-            self.w_t_h = vs.get_variable("TL_w_h_target", shape=[1, self.source_seq_len])
+            self.w_t_h = vs.get_variable("TL_w_h_target", shape=[1, self.source_seq_len],
+                                         initializer=tf.constant_initializer(0.02))
             # self.v_t_h = vs.get_variable("TL_v_h_target", shape=[self.input_size, 1])
-            self.w_t_s = vs.get_variable("TL_w_s_target", shape=[1, self.source_seq_len])
+            self.w_t_s = vs.get_variable("TL_w_s_target", shape=[1, self.source_seq_len],
+                                         initializer=tf.constant_initializer(0.02))
             # self.v_t_s = vs.get_variable("TL_v_s_target", shape=[self.rnn_size, 1])
-            self.w_t_b = vs.get_variable("TL_w_b_target", shape=[1])
+            self.w_t_b = vs.get_variable("TL_w_b_target", shape=[1], initializer=tf.constant_initializer(0.02))
             session.run(tf.global_variables_initializer())
 
         # linear warapper after GRU, make the output of GRU has the same dimension as input for residual connedction
         # cell = rnn_cell_extensions.LinearSpaceDecoderWrapper(cell, self.input_size)
+
+        transfer_model_dir = '../../model/train2/'
+        model_path = os.path.normpath(os.path.join(transfer_model_dir, "model-" + str(2)))
+        model_source.saver.restore(session, model_path)
+        cell = model_source.cell
 
         # Store the outputs here
         outputs = []
@@ -139,8 +151,10 @@ class TransferSimpleModel(object):
 
         # Build the RNN
         with vs.variable_scope("basic_rnn_seq2seq"):
-            self.outputs, self.states = Transfer_rnn_gate.static_rnn(session, source_size, model_source, self.w_h, self.w_s, self.w_b,
-                                                                self.w_t_h, self.w_t_s, self.w_t_b, self.cell, x_p, dtype=tf.float32)
+            self.outputs, self.states = Transfer_rnn_gate.static_rnn(session, source_size, model_source, self.w_h,
+                                                                     self.w_s, self.w_b,
+                                                                     self.w_t_h, self.w_t_s, self.w_t_b, self.cell, x_p,
+                                                                     dtype=tf.float32)
 
             # self.outputs, self.states = Transfer_rnn_gate.static_lstm_rnn(session, source_size, model_source, self.w_h, self.w_s, self.w_b,
             #                                                          self.w_t_h, self.w_t_s, self.w_t_b, self.cell, x_p,
@@ -161,6 +175,10 @@ class TransferSimpleModel(object):
         params = tf.trainable_variables()
 
         opt = tf.train.GradientDescentOptimizer(self.learning_rate)
+
+        # opt = tf.train.AdamOptimizer(learning_rate=self.learning_rate, beta1=self.learning_rate_decay_factor,
+        #                              beta2=self.learning_rate_decay_factor + 0.09, epsilon=1e-08, use_locking=False,
+        #                              name='Adam')
 
         # Update all the trainable parameters
         gradients = tf.gradients(self.loss, params)
@@ -215,7 +233,6 @@ class TransferSimpleModel(object):
                 output_feed = [self.loss,  # Loss for this batch.
                                self.loss_summary,
                                self.outputs]
-
                 outputs = session.run(output_feed, input_feed)
                 return outputs[0], outputs[1], outputs[2]  # No gradient norm
         else:

@@ -8,7 +8,7 @@ import createData2
 import SimpleModel
 import TransferSimpleModel
 
-train_dir = os.path.normpath(os.path.join('../../model/', 'train/'))
+train_dir = os.path.normpath(os.path.join('../../model/', 'train2/'))
 
 
 def create_model(session, seq_length_in, seq_length_out, size, num_layers, max_gradient_norm, batch_size,
@@ -84,14 +84,14 @@ def create_model(session, seq_length_in, seq_length_out, size, num_layers, max_g
 
 
 def train(train_data, train_label, transfer, test_data, test_label, source_index=1):
-    epoch = 100
+    epoch = 1
     max_gradient_norm = 5
     batch_size = 128
 
     seq_length_in = 30
     seq_length_out = 1
 
-    learning_rate = 0.05
+    learning_rate = 0.09
     learning_rate_decay_factor = 0.99
     learning_rate_step = 150
 
@@ -124,9 +124,6 @@ def train(train_data, train_label, transfer, test_data, test_label, source_index
 
                 _, step_loss, loss_summary, lr_summary = model.step(sess, encoder_inputs[0], decoder_outputs[0], False)
 
-                # model.train_writer.add_summary(loss_summary, current_step)
-                # model.train_writer.add_summary(lr_summary, current_step)
-
                 # if current_step % 100 == 0:
                 #     print("step {0:04d}; step_loss: {1:.4f}".format(current_step, step_loss))
 
@@ -135,30 +132,6 @@ def train(train_data, train_label, transfer, test_data, test_label, source_index
                 # === step decay ===
                 if current_step % learning_rate_step == 0:
                     sess.run(model.learning_rate_decay_op)
-
-                # Once in a while, we save checkpoint, print statistics, and run evals.
-                # if current_step % batch_size == 0:
-                #
-                #     forward_only = True
-                #     step_loss, loss_summary, output_data = model.step(sess, encoder_inputs[0], decoder_outputs[0], forward_only)
-                #     val_loss = step_loss
-                #
-                #     # model.test_writer.add_summary(loss_summary, current_step)
-                #
-                #     print()
-                #     print("{0: <16} |".format("milliseconds"), end="")
-                #     print()
-                #     print("============================\n"
-                #           "Global step:         %d\n"
-                #           "Learning rate:       %.4f\n"
-                #           "Train loss avg:      %.4f\n"
-                #           "--------------------------\n"
-                #           "Val loss:            %.4f\n"
-                #           "============================" % (model.global_step.eval(),
-                #                                             model.learning_rate.eval(),
-                #                                             loss, val_loss))
-                #     print()
-
 
                 previous_losses.append(step_loss)
             print('epoch: {0}, train loss: {1}'.format(epoch_index, sum(previous_losses)/len(previous_losses)))
@@ -169,11 +142,11 @@ def train(train_data, train_label, transfer, test_data, test_label, source_index
             if (epoch_index == epoch) & (current_step % (len(train_data)-seq_length_in) == 0):
                 print("current_step = ", current_step)
                 test(model, sess, test_data, test_label)
-            #
-            #     print("done in {0:.2f} ms".format((time.time() - start_time) * 1000))
-            #     model.saver.save(sess, os.path.normpath(os.path.join(train_dir, 'model')),
-            #                      global_step=source_index)
-            #     print("Saving the model...");
+
+                # print("done in {0:.2f} ms".format((time.time() - start_time) * 1000))
+                # model.saver.save(sess, os.path.normpath(os.path.join(train_dir, 'model')),
+                #                  global_step=source_index)
+                # print("Saving the model...")
 
             # Reset global time and loss
             step_time, loss = 0, 0
@@ -194,16 +167,17 @@ def test(model, sess, test_data, test_label):
 
         step_loss, loss_summary, output_data = model.step(sess, encoder_inputs[0], decoder_outputs[0],
                                                      forward_only=True)
-        output_datas.append(output_data[-1][0])
+        output_datas.append(output_data[-1][-1])
         losses.append(step_loss)
     mean_loss = sum(losses)/len(losses)
     createData2.save_original_data('predict_outputs', output_datas)
     print('test loss: ', mean_loss)
     plt.plot(output_datas)
     plt.plot(test_label[seq_length_in:])
-    plt.legend(['pred','gt'])
+    plt.legend(['pred', 'gt'])
     plt.show()
     # createData2.draw_data(output_datas, len(output_datas), 'predict_outputs.pdf')
+
 
 def tf_train(train_data_list, train_label_list, transfer, test_data, test_label, source_index=1):
     epoch = 100
@@ -214,7 +188,7 @@ def tf_train(train_data_list, train_label_list, transfer, test_data, test_label,
     seq_length_out = 1
 
     learning_rate = 0.05
-    learning_rate_decay_factor = 0.99
+    learning_rate_decay_factor = 0.985
     learning_rate_step = 150
 
     num_layers = 1
@@ -265,16 +239,15 @@ def tf_train(train_data_list, train_label_list, transfer, test_data, test_label,
                 print("current_step = ", current_step)
                 test(model, sess, test_data, test_label)
 
-                print("done in {0:.2f} ms".format((time.time() - start_time) * 1000))
-                model.saver.save(sess, os.path.normpath(os.path.join(train_dir, 'model')),
-                                 global_step=source_index)
-                print("Saving the model...");
+                # print("done in {0:.2f} ms".format((time.time() - start_time) * 1000))
+                # model.saver.save(sess, os.path.normpath(os.path.join(train_dir, 'model')),
+                #                  global_step=source_index)
+                # print("Saving the model...")
 
             # Reset global time and loss
             step_time, loss = 0, 0
 
             sys.stdout.flush()
-
 
 
 if __name__ == '__main__':
@@ -284,15 +257,17 @@ if __name__ == '__main__':
 
     data_file_name = 'data_period150_w1_mu0_sigma002'
     # data_file_name = 'data_period100_w1_mu0_sigma002'
+    # data_file_name = 'data_period200_w1_mu0_sigma002'
 
     datas = createData2.read_original_data(data_file_name)
     datas = createData2.normalization_data(datas)
 
-    data_len = 750
+    data_len = 450
     # data_len = len(datas)
+    print('data len: ', data_len)
     data_train = datas[0:data_len]
     data_test = datas[data_len:]
-    # data_test = datas[:data_len]
+    # data_test = datas[0:data_len]
     train_data, train_label = createData2.generate(data_train)
 
     #
@@ -301,16 +276,24 @@ if __name__ == '__main__':
     # datas2 = createData2.normalization_data(datas2)
     # data_len2 = len(datas2)
     # data_train2 = datas2[0:data_len2]
-    # # data_test = datas[data_len:]
-    # data_test2 = datas2[0:data_len2]
     # train_data2, train_label2 = createData2.generate(data_train2)
-    #
+    # # # #
     # #
+    # data_file_name3 = 'data_period200_w1_mu0_sigma002'
+    # datas3 = createData2.read_original_data(data_file_name3)
+    # datas3 = createData2.normalization_data(datas3)
+    # data_len3 = len(datas3)
+    # data_train3 = datas3[0:data_len3]
+    # train_data3, train_label3 = createData2.generate(data_train3)
+    # #
+    # # # # #
     # train_data_list = []
     # train_label_list = []
     # train_data_list.append(train_data2)
+    # # train_data_list.append(train_data3)
     # train_data_list.append(train_data)
     # train_label_list.append(train_label2)
+    # # train_label_list.append(train_label3)
     # train_label_list.append(train_label)
 
     test_data, test_label = createData2.generate(data_test)

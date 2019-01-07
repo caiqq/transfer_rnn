@@ -1279,6 +1279,7 @@ def static_rnn(session,
                                                            time, min_sequence_length, max_sequence_length,
                                                            zero_output,
                                                            state_list, output_list)
+
         # get final states based on the source states list.
         output, Tstate = TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
                                              output_list, input_)
