@@ -100,8 +100,8 @@ def read_data(file_name):
 
 if __name__ == '__main__':
 
-    train_data = create_original_data(start=0, stop=12.56, num=2512, w=1, mu=0, sigma=0.01)
-    file_name = 'data_period200_w1_mu0_sigma001'
+    train_data = create_original_data(start=0, stop=12.56, num=252, w=1, mu=0, sigma=0.02)
+    file_name = 'data_period20_w1_mu0_sigma002'
     save_original_data(file_name, train_data)
     read_data = read_original_data(file_name)
     print(read_data)

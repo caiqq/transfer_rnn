@@ -1,5 +1,5 @@
 data/
 model/train/
-model/summaries_dir/
-model/summaries_dir/*
+summaries_dir/
+summaries_dir/*
 .idea/

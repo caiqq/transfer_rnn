@@ -2,13 +2,331 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="144dfed2-03e4-4a22-8a2c-f7b60f59047a" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/transfer/simpleTest.py" />
       <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/model/train2/checkpoint" afterPath="$PROJECT_DIR$/model/train2/checkpoint" />
       <change beforePath="$PROJECT_DIR$/src/transfer/TransferSimpleModel.py" afterPath="$PROJECT_DIR$/src/transfer/TransferSimpleModel.py" />
       <change beforePath="$PROJECT_DIR$/src/transfer/Transfer_rnn_gate.py" afterPath="$PROJECT_DIR$/src/transfer/Transfer_rnn_gate.py" />
       <change beforePath="$PROJECT_DIR$/src/transfer/createData2.py" afterPath="$PROJECT_DIR$/src/transfer/createData2.py" />
       <change beforePath="$PROJECT_DIR$/src/transfer/mTest.py" afterPath="$PROJECT_DIR$/src/transfer/mTest.py" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546240175.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546243561.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546350299.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546417391.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546418770.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546422598.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546422732.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546422775.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546422843.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546435640.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546435654.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546436070.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546436922.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546437003.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546506144.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546506271.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/test/events.out.tfevents.1546506647.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546240175.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546243561.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546350299.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546417390.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546418770.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546422598.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546422731.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546422775.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546422842.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546435639.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546435653.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546436069.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546436921.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546437003.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546506143.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546506222.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546506271.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546506647.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546507370.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546507392.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546507452.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546507479.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546507731.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546507916.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546508323.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546509132.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546517407.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546520032.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546520231.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546520413.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546521197.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546521294.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546521436.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546521565.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546521678.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546521714.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546522802.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546522834.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546522853.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546522987.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546523080.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546523219.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546754918.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546758813.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546759530.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546759581.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546759696.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546759737.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546759889.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546759909.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546759941.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546760366.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546761662.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546761711.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546761743.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546761860.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546761884.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546761980.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546762001.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546762154.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546762418.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546762540.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546762604.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546762687.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546765025.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546765459.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546765599.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546766061.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546766145.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546767590.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546767998.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768125.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768162.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768188.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768213.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768234.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768247.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768263.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768296.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768356.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768385.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768394.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768407.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768416.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768424.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768432.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768439.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768445.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768452.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768647.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768671.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768699.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768729.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768764.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768784.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768806.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768842.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768920.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768946.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546768980.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546781543.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546781705.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546781736.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546781777.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546781793.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546782044.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546782072.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546782193.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546782225.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546782391.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546782596.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546782826.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783127.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783320.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783468.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783748.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783796.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783814.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783843.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783861.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783895.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783919.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546783939.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546784021.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546784123.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546784315.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546784515.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546784629.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546784774.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546784952.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785155.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785318.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785451.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785606.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785675.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785763.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785809.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785914.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785947.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546785983.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787481.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787544.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787596.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787616.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787652.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787662.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787678.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787786.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787849.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787873.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787918.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546787972.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546788001.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546788029.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546788111.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546788187.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546788271.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546788375.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546788410.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546788496.xxr-ThinkPad-T470p" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546828309.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546829380.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546829629.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546831411.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546831592.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546831663.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546831801.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546832056.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546832104.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546832152.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546832204.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546832460.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546832631.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546832809.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546833023.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546833116.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546833211.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546833298.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546833410.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546833521.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546833629.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546839827.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546839972.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546840067.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546840115.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546840129.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546841204.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546841260.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546841392.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546841453.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546841509.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546841564.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546841775.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546842064.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546842288.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843402.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843467.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843535.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843546.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843637.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843701.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843751.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843803.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843847.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546843894.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546844108.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546844162.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546844202.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546844245.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546844315.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546844770.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546844846.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546844925.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546845027.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546845109.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546845190.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546845252.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546845308.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546845438.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546845600.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546846463.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546846613.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546847100.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546848030.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546848383.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546848502.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546848579.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546848677.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546848742.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546849056.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546849984.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546850170.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546850208.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546850361.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546850734.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546850813.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546850882.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546850980.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546851058.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852080.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852130.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852208.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852251.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852299.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852343.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852383.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852783.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852824.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546852933.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546853142.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546853345.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546853429.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546853485.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546853593.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546853751.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546853790.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546853868.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546853939.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546854001.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546854071.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546854157.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546854350.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546859964.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546860444.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546860543.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546860645.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546861462.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546861495.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546861640.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546861781.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862183.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862210.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862377.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862584.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862691.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862738.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862788.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862795.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862854.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862964.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546862973.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546863104.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546863210.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546863298.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546863343.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546863397.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546863531.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546863688.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546863815.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546863939.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546864130.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546864268.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546864412.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546864529.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546864639.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546864751.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546864930.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546865026.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546865073.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546865196.ubuntu" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/summaries_dir/train/events.out.tfevents.1546865232.ubuntu" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,32 +339,30 @@
     <SUITE FILE_PATH="coverage/trnn_cai$createData.coverage" NAME="createData Coverage Results" MODIFIED="1544586211668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/trnn_cai$createData__1_.coverage" NAME="createData (1) Coverage Results" MODIFIED="1545915734602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/transfer" />
     <SUITE FILE_PATH="coverage/trnn_cai$transferLSTM.coverage" NAME="transferLSTM Coverage Results" MODIFIED="1545023947917" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/transfer" />
-    <SUITE FILE_PATH="coverage/trnn_cai$createData2.coverage" NAME="createData2 Coverage Results" MODIFIED="1546828071534" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/transfer" />
+    <SUITE FILE_PATH="coverage/trnn_cai$createData2.coverage" NAME="createData2 Coverage Results" MODIFIED="1546915845679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/transfer" />
     <SUITE FILE_PATH="coverage/trnn_cai$SimpleModel.coverage" NAME="SimpleModel Coverage Results" MODIFIED="1545814853609" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/transfer" />
-    <SUITE FILE_PATH="coverage/trnn_cai$mTest.coverage" NAME="mTest Coverage Results" MODIFIED="1546865227679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/transfer" />
     <SUITE FILE_PATH="coverage/trnn_cai$simpleTest.coverage" NAME="simpleTest Coverage Results" MODIFIED="1546866112317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/transfer" />
+    <SUITE FILE_PATH="coverage/trnn_cai$mTest.coverage" NAME="mTest Coverage Results" MODIFIED="1546920567671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/transfer" />
     <SUITE FILE_PATH="coverage/trnn_cai$generateLSTM.coverage" NAME="generateLSTM Coverage Results" MODIFIED="1545296996482" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/transfer" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="mTest.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="mTest.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/transfer/mTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="298" column="6" lean-forward="true" selection-start-line="298" selection-start-column="4" selection-end-line="298" selection-end-column="59" />
+            <state relative-caret-position="270">
+              <caret line="304" column="43" lean-forward="true" selection-start-line="304" selection-start-column="43" selection-end-line="304" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="simpleTest.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/transfer/simpleTest.py">
+      <file leaf-file-name="createData2.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/transfer/createData2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="45" column="22" lean-forward="true" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="342">
+              <caret line="107" column="61" lean-forward="true" selection-start-line="107" selection-start-column="61" selection-end-line="107" selection-end-column="61" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -54,8 +370,8 @@
       <file leaf-file-name="SimpleModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/transfer/SimpleModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1656">
-              <caret line="127" column="33" lean-forward="false" selection-start-line="127" selection-start-column="16" selection-end-line="127" selection-end-column="33" />
+            <state relative-caret-position="342">
+              <caret line="58" column="97" lean-forward="false" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="112" />
               <folding />
             </state>
           </provider>
@@ -64,8 +380,8 @@
       <file leaf-file-name="TransferSimpleModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/transfer/TransferSimpleModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="133" column="16" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="135" selection-end-column="32" />
+            <state relative-caret-position="-551">
+              <caret line="80" column="38" lean-forward="false" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
               <folding>
                 <element signature="e#63#101#0" expanded="true" />
               </folding>
@@ -76,8 +392,8 @@
       <file leaf-file-name="Transfer_rnn_gate.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/transfer/Transfer_rnn_gate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="1685" column="22" lean-forward="false" selection-start-line="1685" selection-start-column="9" selection-end-line="1685" selection-end-column="24" />
+            <state relative-caret-position="27486">
+              <caret line="1544" column="29" lean-forward="false" selection-start-line="1544" selection-start-column="29" selection-end-line="1544" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -146,13 +462,13 @@
         <option value="$PROJECT_DIR$/src/originalTransfer/Tseq2seq_model_Gate.py" />
         <option value="$PROJECT_DIR$/src/transfer/rnn_cell_extensions.py" />
         <option value="$PROJECT_DIR$/src/originalTransfer/Trnn_Gate.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/transfer/SimpleModel.py" />
-        <option value="$PROJECT_DIR$/src/transfer/createData2.py" />
+        <option value="$PROJECT_DIR$/src/transfer/simpleTest.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/transfer/Transfer_rnn_gate.py" />
         <option value="$PROJECT_DIR$/src/transfer/TransferSimpleModel.py" />
+        <option value="$PROJECT_DIR$/src/transfer/createData2.py" />
         <option value="$PROJECT_DIR$/src/transfer/mTest.py" />
-        <option value="$PROJECT_DIR$/src/transfer/simpleTest.py" />
       </list>
     </option>
   </component>
@@ -184,6 +500,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -195,6 +512,12 @@
               <item name="trnn-cai" type="b2602c69:ProjectViewProjectNode" />
               <item name="trnn-cai" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="trnn-cai" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trnn-cai" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="train" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="trnn-cai" type="b2602c69:ProjectViewProjectNode" />
@@ -211,7 +534,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -244,7 +566,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.simpleTest">
+  <component name="RunManager" selected="Python.mTest">
     <configuration name="SimpleModel" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -349,9 +671,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.simpleTest" />
-        <item index="1" class="java.lang.String" itemvalue="Python.mTest" />
-        <item index="2" class="java.lang.String" itemvalue="Python.createData2" />
+        <item index="0" class="java.lang.String" itemvalue="Python.mTest" />
+        <item index="1" class="java.lang.String" itemvalue="Python.createData2" />
+        <item index="2" class="java.lang.String" itemvalue="Python.simpleTest" />
         <item index="3" class="java.lang.String" itemvalue="Python.generateLSTM" />
         <item index="4" class="java.lang.String" itemvalue="Python.SimpleModel" />
       </list>
@@ -378,27 +700,27 @@
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32917705" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="JSON Viewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2033241" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.32963988" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" x="692" y="182" width="895" height="549" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JSON Viewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20554017" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.32963988" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="1019" y="175" width="897" height="557" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -423,11 +745,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/transfer/createData2.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1854">
+          <caret line="106" column="20" lean-forward="true" selection-start-line="106" selection-start-column="20" selection-end-line="106" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/simpleTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="954">
+          <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#23#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/TransferSimpleModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1170">
+          <caret line="80" column="38" lean-forward="true" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+          <folding>
+            <element signature="e#63#101#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/SimpleModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2034">
+          <caret line="127" column="33" lean-forward="false" selection-start-line="127" selection-start-column="16" selection-end-line="127" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/Transfer_rnn_gate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27486">
+          <caret line="1544" column="29" lean-forward="true" selection-start-line="1544" selection-start-column="29" selection-end-line="1544" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/mTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/createData2.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1098">
           <caret line="61" column="28" lean-forward="true" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#18#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -474,9 +846,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11012">
           <caret line="720" column="0" lean-forward="false" selection-start-line="720" selection-start-column="0" selection-end-line="720" selection-end-column="0" />
-          <folding>
-            <element signature="e#63#101#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -536,16 +905,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-55">
           <caret line="22" column="70" lean-forward="false" selection-start-line="22" selection-start-column="60" selection-end-line="22" selection-end-column="70" />
-          <folding>
-            <element signature="e#0#23#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -567,16 +926,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/transfer/createData2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="732">
-          <caret line="105" column="45" lean-forward="true" selection-start-line="105" selection-start-column="45" selection-end-line="105" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#18#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/ops.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -585,47 +934,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/transfer/TransferSimpleModel.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="133" column="16" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="135" selection-end-column="32" />
-          <folding>
-            <element signature="e#63#101#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="90">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/transfer/Transfer_rnn_gate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="1685" column="22" lean-forward="false" selection-start-line="1685" selection-start-column="9" selection-end-line="1685" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/transfer/SimpleModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1656">
-          <caret line="127" column="33" lean-forward="false" selection-start-line="127" selection-start-column="16" selection-end-line="127" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/transfer/mTest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="298" column="6" lean-forward="true" selection-start-line="298" selection-start-column="4" selection-end-line="298" selection-end-column="59" />
+        <state relative-caret-position="27486">
+          <caret line="1544" column="29" lean-forward="false" selection-start-line="1544" selection-start-column="29" selection-end-line="1544" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/transfer/simpleTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="45" column="22" lean-forward="true" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
+        <state relative-caret-position="756">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/createData2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="107" column="61" lean-forward="true" selection-start-line="107" selection-start-column="61" selection-end-line="107" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/SimpleModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="58" column="97" lean-forward="false" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/TransferSimpleModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-551">
+          <caret line="80" column="38" lean-forward="false" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+          <folding>
+            <element signature="e#63#101#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/transfer/mTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="304" column="43" lean-forward="true" selection-start-line="304" selection-start-column="43" selection-end-line="304" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>

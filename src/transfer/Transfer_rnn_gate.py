@@ -1537,8 +1537,10 @@ def TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, sta
         else:
             output = tf.add(output, h1)
             state = tf.add(state, s1)
-    output = tf.tanh(tf.add(output, tf.matmul(w_t_h, Toutput)))
-    state = tf.tanh(tf.add(state, tf.multiply(w_t_s, Tstate)))
+    # output = tf.tanh(tf.add(output, tf.matmul(w_t_h, Toutput)))
+    # state = tf.tanh(tf.add(state, tf.multiply(w_t_s, Tstate)))
+    output = tf.sigmoid(tf.add(output, tf.matmul(w_t_h, Toutput)))
+    state = tf.sigmoid(tf.add(state, tf.multiply(w_t_s, Tstate)))
     #   output = tf.tanh(output)
     #  state = tf.tanh(state)
     return output, state

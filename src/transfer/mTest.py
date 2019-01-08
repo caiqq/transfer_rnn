@@ -84,15 +84,17 @@ def create_model(session, seq_length_in, seq_length_out, size, num_layers, max_g
 
 
 def train(train_data, train_label, transfer, test_data, test_label, source_index=1):
-    epoch = 1
+    # epoch = 350
+    epoch = 200
     max_gradient_norm = 5
     batch_size = 128
 
     seq_length_in = 30
     seq_length_out = 1
 
+    # learning_rate = 0.07
     learning_rate = 0.09
-    learning_rate_decay_factor = 0.99
+    learning_rate_decay_factor = 0.992
     learning_rate_step = 150
 
     num_layers = 1
@@ -156,7 +158,6 @@ def train(train_data, train_label, transfer, test_data, test_label, source_index
 
 def test(model, sess, test_data, test_label):
     seq_length_in = 30
-    data_file_name = 'data_period150_w1_mu0_sigma002'
 
     losses = []
     output_datas = []
@@ -167,13 +168,13 @@ def test(model, sess, test_data, test_label):
 
         step_loss, loss_summary, output_data = model.step(sess, encoder_inputs[0], decoder_outputs[0],
                                                      forward_only=True)
-        output_datas.append(output_data[-1][-1])
+        output_datas.append(output_data[0][-1])
         losses.append(step_loss)
     mean_loss = sum(losses)/len(losses)
-    createData2.save_original_data('predict_outputs', output_datas)
+    # createData2.save_original_data('predict_outputs', output_datas)
     print('test loss: ', mean_loss)
     plt.plot(output_datas)
-    plt.plot(test_label[seq_length_in:])
+    plt.plot(test_label[0:len(test_label) - seq_length_in])
     plt.legend(['pred', 'gt'])
     plt.show()
     # createData2.draw_data(output_datas, len(output_datas), 'predict_outputs.pdf')
@@ -187,8 +188,8 @@ def tf_train(train_data_list, train_label_list, transfer, test_data, test_label,
     seq_length_in = 30
     seq_length_out = 1
 
-    learning_rate = 0.05
-    learning_rate_decay_factor = 0.985
+    learning_rate = 0.03
+    learning_rate_decay_factor = 0.99
     learning_rate_step = 150
 
     num_layers = 1
@@ -209,6 +210,8 @@ def tf_train(train_data_list, train_label_list, transfer, test_data, test_label,
         # === Training step ===
         # for j in range(2):
         for data_index in range(len(train_data_list)):
+            sess.run(tf.assign(model.learning_rate, learning_rate))
+            sess.run(tf.assign(model.learning_rate, model.learning_rate * learning_rate_decay_factor))
             train_data = train_data_list[data_index]
             train_label = train_label_list[data_index]
             current_step = 0
@@ -252,12 +255,13 @@ def tf_train(train_data_list, train_label_list, transfer, test_data, test_label,
 
 if __name__ == '__main__':
     print('begin train')
-    transfer = 1
+    transfer = 0
     source_index = 1
 
     data_file_name = 'data_period150_w1_mu0_sigma002'
     # data_file_name = 'data_period100_w1_mu0_sigma002'
     # data_file_name = 'data_period200_w1_mu0_sigma002'
+    # data_file_name = 'data_period20_w1_mu0_sigma002'
 
     datas = createData2.read_original_data(data_file_name)
     datas = createData2.normalization_data(datas)
@@ -270,37 +274,43 @@ if __name__ == '__main__':
     # data_test = datas[0:data_len]
     train_data, train_label = createData2.generate(data_train)
 
+    data_file_name2 = 'data_period100_w1_mu0_sigma002'
+    datas2 = createData2.read_original_data(data_file_name2)
+    datas2 = createData2.normalization_data(datas2)
+    data_len2 = len(datas2)
+    data_train2 = datas2[0:data_len2]
+    train_data2, train_label2 = createData2.generate(data_train2)
     #
-    # data_file_name2 = 'data_period100_w1_mu0_sigma002'
-    # datas2 = createData2.read_original_data(data_file_name2)
-    # datas2 = createData2.normalization_data(datas2)
-    # data_len2 = len(datas2)
-    # data_train2 = datas2[0:data_len2]
-    # train_data2, train_label2 = createData2.generate(data_train2)
-    # # # #
-    # #
     # data_file_name3 = 'data_period200_w1_mu0_sigma002'
     # datas3 = createData2.read_original_data(data_file_name3)
     # datas3 = createData2.normalization_data(datas3)
     # data_len3 = len(datas3)
     # data_train3 = datas3[0:data_len3]
     # train_data3, train_label3 = createData2.generate(data_train3)
-    # #
-    # # # # #
-    # train_data_list = []
-    # train_label_list = []
-    # train_data_list.append(train_data2)
-    # # train_data_list.append(train_data3)
-    # train_data_list.append(train_data)
-    # train_label_list.append(train_label2)
-    # # train_label_list.append(train_label3)
-    # train_label_list.append(train_label)
+    #
+    # # data_file_name4 = 'data_period20_w1_mu0_sigma002'
+    # # datas4 = createData2.read_original_data(data_file_name4)
+    # # datas4 = createData2.normalization_data(datas4)
+    # # data_len4 = len(datas4)
+    # # data_train4 = datas4[0:data_len4]
+    # # train_data4, train_label4 = createData2.generate(data_train4)
+    #
+    train_data_list = []
+    train_label_list = []
+    train_data_list.append(train_data2)
+    # train_data_list.append(train_data3)
+    # train_data_list.append(train_data4)
+    train_data_list.append(train_data)
+    train_label_list.append(train_label2)
+    # train_label_list.append(train_label3)
+    # train_label_list.append(train_label4)
+    train_label_list.append(train_label)
 
     test_data, test_label = createData2.generate(data_test)
     # plt.plot(test_label)
     # plt.show()
     print("train size: {0}".format(len(train_data)))
 
-    train(train_data, train_label, transfer, test_data, test_label, source_index)
-    # tf_train(train_data_list, train_label_list, transfer, test_data, test_label, source_index)
+    # train(train_data, train_label, transfer, test_data, test_label, source_index)
+    tf_train(train_data_list, train_label_list, transfer, test_data, test_label, source_index)
 
