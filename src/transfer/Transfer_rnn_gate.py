@@ -1281,10 +1281,10 @@ def static_rnn(session,
                                                            state_list, output_list)
 
         # get final states based on the source states list.
-        output, Tstate = TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
-                                             output_list, input_)
-        # output, Tstate = TL_get_final_output2(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
+        # output, Tstate = TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
         #                                      output_list, input_)
+        output, Tstate = TL_get_final_output2(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
+                                             output_list, input_)
         outputs.append(output)
 
         return (outputs, Tstate)
@@ -1525,8 +1525,6 @@ def TL_get_source_states(model_path, model_source, session, input_, state, seque
 
 
 def TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list, output_list, input_):
-    print('w_h shape: {0}'.format(len(w_h)))
-    print('output_list shape: {0}'.format(len(output_list)))
     for j in range(len(output_list)):
         h1 = tf.matmul(w_h[j], output_list[j])
         s1 = tf.multiply(w_s[j], state_list[j])
@@ -1547,24 +1545,21 @@ def TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, sta
 
 
 def TL_get_final_output2(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list, output_list, input_):
-    print('w_h shape: {0}'.format(len(w_h)))
-    print('output_list shape: {0}'.format(len(output_list)))
-    print('input_ shape: ', input_.shape)
-    print('w_t_h shape: ', w_t_h.shape)
     num_n = 0
     for j in range(len(output_list)):
         h1 = tf.matmul(w_h[j], output_list[j])
-        s1 = tf.multiply(w_s[j], state_list[j])
         h2 = tf.matmul(w_t_h, input_)
+
+        s1 = tf.multiply(w_s[j], state_list[j])
         s2 = tf.multiply(w_t_s, input_)
-        print('h1 shape: ', h1.shape)
-        print('w_b[j] shape: ', w_b[j].shape)
+
         kk1 = tf.add(h1, s1)
-        kk2 =tf.add(kk1, w_b[j])
-        v1 = tf.tanh(kk2)
+        kk2 = tf.add(kk1, w_b[j])
+        v1 = tf.sigmoid(kk2)
+
         ff1 = tf.add(h2, s2)
-        ff2 = tf.add(ff1, w_t_b)
-        v2 = tf.tanh(ff2)
+        ff2 = tf.add(ff1, w_t_b[j])
+        v2 = tf.sigmoid(ff2)
 
         num_n = num_n + 1
         if j == 0:

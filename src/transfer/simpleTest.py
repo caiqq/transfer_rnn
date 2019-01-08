@@ -54,4 +54,7 @@ def load_model():
 
 
 if __name__ == '__main__':
-    load_model()
+    # load_model()
+    a = 10
+    for i in range(a):
+        print(i)
