@@ -62,6 +62,8 @@ class TransferSimpleModel(object):
         self.target_seq_len = target_seq_len
         self.rnn_size = rnn_size
 
+        self.model_source = model_source
+
         self.size = rnn_size
 
         self.batch_size = batch_size
@@ -85,13 +87,22 @@ class TransferSimpleModel(object):
             #                                     for _ in range(num_layers)])
 
         # === Transform the inputs ===
+        self.source_outputs = []
         with tf.name_scope("inputs_"):
 
             x_p = tf.placeholder(dtype=tf.float32, shape=(source_seq_len, 1), name="input_placeholder")
             y_p = tf.placeholder(dtype=tf.float32, shape=(1), name="pred_placeholder")
 
+            source_output_1 = tf.placeholder(dtype=tf.float32, shape=(source_seq_len, 1), name="input_placeholder_1")
+            source_output_2 = tf.placeholder(dtype=tf.float32, shape=(source_seq_len, 1), name="input_placeholder_2")
+            source_output_3 = tf.placeholder(dtype=tf.float32, shape=(source_seq_len, 1), name="input_placeholder_3")
+
             self.encoder_inputs = x_p
             self.decoder_outputs = y_p
+
+            self.source_output_1 = source_output_1
+            self.source_output_2 = source_output_2
+            self.source_output_3 = source_output_3
 
             # x_p = tf.split(x_p, source_seq_len, axis=0)
             # generate weights for sources-------------------------------------------
@@ -101,7 +112,7 @@ class TransferSimpleModel(object):
             # self.v_s = []
             self.w_b = []
             self.w_t_b = []
-
+            print('source size: ', source_size)
             for source_index in range(source_size):
                 w_h = vs.get_variable("TL_w_h_source_{0}".format(source_index), shape=[1, self.source_seq_len],
                                       initializer=tf.constant_initializer(0.1))
@@ -146,24 +157,19 @@ class TransferSimpleModel(object):
 
         # Define the loss function
         lf = None
-        # if loss_to_use == "sampling_based":
-        #   def lf(prev, i): # function for sampling_based loss
-        #     return prev
-        # elif loss_to_use == "supervised":
-        #   pass
-        # else:
-        #   raise(ValueError, "unknown loss: %s" % loss_to_use)
 
         # Build the RNN
         with vs.variable_scope("basic_rnn_seq2seq"):
-            self.outputs, self.states = Transfer_rnn_gate.static_rnn(session, source_size, model_source, self.w_h,
+            self.outputs, self.states, self.source_outputs = Transfer_rnn_gate.static_rnn(session, source_size,
+                                                                                          model_source, self.w_h,
                                                                      self.w_s, self.w_b,
                                                                      self.w_t_h, self.w_t_s, self.w_t_b, self.cell, x_p,
-                                                                     dtype=tf.float32)
+                                                                     self.source_outputs, self.source_output_1, self.source_output_2,
+                                                                                          self.source_output_3, dtype=tf.float32)
 
             # self.outputs, self.states = Transfer_rnn_gate.static_lstm_rnn(session, source_size, model_source, self.w_h, self.w_s, self.w_b,
             #                                                          self.w_t_h, self.w_t_s, self.w_t_b, self.cell, x_p,
-            #                                                          dtype=tf.float32)
+            #                                                          self.source_outputs, dtype=tf.float32)
 
             # outputs, self.states = Transfer_rnn_gate.static_rnn(session, model_source, self.w_h, self.w_s, self.w_b,
             #                                                     self.w_t_h, self.w_t_s, self.w_t_b, cell, x_p,
@@ -198,7 +204,7 @@ class TransferSimpleModel(object):
 
         self.saver = tf.train.Saver(tf.global_variables(), max_to_keep=10)
 
-    def step(self, session, encoder_inputs, decoder_outputs,
+    def step(self, session, encoder_inputs, decoder_outputs, source_output_1, source_output_2, source_output_3,
              forward_only, srnn_seeds=False):
         """Run a step of the model feeding the given inputs.
 
@@ -217,7 +223,10 @@ class TransferSimpleModel(object):
             target_weights disagrees with bucket size for the specified bucket_id.
         """
         input_feed = {self.encoder_inputs: encoder_inputs,
-                      self.decoder_outputs: decoder_outputs}
+                      self.decoder_outputs: decoder_outputs,
+                      self.source_output_1: source_output_1,
+                      self.source_output_2: source_output_2,
+                      self.source_output_3: source_output_3}
 
         # Output feed: depends on whether we do a backward step or not.
         if not srnn_seeds:
@@ -239,6 +248,7 @@ class TransferSimpleModel(object):
                                self.loss_summary,
                                self.outputs]
                 outputs = session.run(output_feed, input_feed)
+                # print(outputs[3])
                 return outputs[0], outputs[1], outputs[2]  # No gradient norm
         else:
             # Validation on SRNN's seeds

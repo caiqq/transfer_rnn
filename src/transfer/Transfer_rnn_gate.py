@@ -46,6 +46,7 @@ from tensorflow.python.util import nest
 import numpy as np
 import tensorflow as tf
 import os
+import copy
 
 # pylint: disable=protected-access
 _concat = rnn_cell_impl._concat
@@ -1095,6 +1096,10 @@ def static_rnn(session,
                w_t_b,
                cell,
                inputs,
+               source_outputs,
+               source_output_1,
+               source_output_2,
+               source_output_3,
                initial_state=None,
                dtype=None,
                sequence_length=None,
@@ -1258,8 +1263,6 @@ def static_rnn(session,
         if time > 0:
             varscope.reuse_variables()
             # pylint: disable=cell-var-from-loop
-        print('input_ size: {0} {1}'.format(type(input_), input_.shape))
-        print('Tstate size: {0} {1} {2}'.format(type(Tstate), Tstate[0].shape, Tstate[1].shape))
         # print('Tstate size: {0} {1}'.format(type(Tstate), Tstate.shape))
         call_cell = lambda: cell(input_, Tstate)
         # pylint: enable=cell-var-from-loop
@@ -1271,23 +1274,30 @@ def static_rnn(session,
         output_list = []
         transfer_dir = '../../model/train/'
 
-        for source_index in range(source_size):
-            model_path = os.path.normpath(os.path.join(transfer_dir, "model-"+str(source_index+1)))
-
-            state_list, output_list = TL_get_source_states(model_path, model_source, session, input_, Tstate,
-                                                           sequence_length,
-                                                           time, min_sequence_length, max_sequence_length,
-                                                           zero_output,
-                                                           state_list, output_list)
-
+        # for source_index in range(source_size):
+        #     model_path = os.path.normpath(os.path.join(transfer_dir, "model-"+str(source_index+1)))
+        #     sub_states, sub_outputs = TL_get_source_states(model_path, model_source, session, input_, Tstate,
+        #                                                    sequence_length,
+        #                                                    time, min_sequence_length, max_sequence_length,
+        #                                                    zero_output,
+        #                                                    state_list, output_list, Toutput)
+        #     state_list.append(sub_states)
+        #     output_list.append(sub_outputs)
+        state_list.append(source_output_1)
+        state_list.append(source_output_2)
+        state_list.append(source_output_3)
+        output_list.append(source_output_1)
+        output_list.append(source_output_2)
+        output_list.append(source_output_3)
         # get final states based on the source states list.
         # output, Tstate = TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
         #                                      output_list, input_)
+
         output, Tstate = TL_get_final_output2(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
                                              output_list, input_)
         outputs.append(output)
 
-        return (outputs, Tstate)
+        return (outputs, Tstate, output_list)
 
 
 def static_lstm_rnn(session,
@@ -1301,6 +1311,7 @@ def static_lstm_rnn(session,
                w_t_b,
                cell,
                inputs,
+               source_outputs,
                initial_state=None,
                dtype=None,
                sequence_length=None,
@@ -1464,8 +1475,7 @@ def static_lstm_rnn(session,
         if time > 0:
             varscope.reuse_variables()
             # pylint: disable=cell-var-from-loop
-        print('input_ size: {0} {1}'.format(type(input_), input_.shape))
-        print('Tstate size: {0} {1}'.format(type(Tstate), Tstate.shape))
+
         call_cell = lambda: cell(input_, Tstate)
         # pylint: enable=cell-var-from-loop
         (Toutput, Tstate) = cal_out_state(sequence_length, time, min_sequence_length, max_sequence_length,
@@ -1476,14 +1486,17 @@ def static_lstm_rnn(session,
         output_list = []
         transfer_dir = '../../model/train/'
 
+
         for source_index in range(source_size):
             model_path = os.path.normpath(os.path.join(transfer_dir, "model-"+str(source_index+1)))
 
-            state_list, output_list = TL_get_source_states(model_path, model_source, session, input_, Tstate,
+            states, outputs = TL_get_source_states(model_path, model_source, session, input_, Tstate,
                                                            sequence_length,
                                                            time, min_sequence_length, max_sequence_length,
                                                            zero_output,
                                                            state_list, output_list)
+            state_list.append(states)
+            output_list.append(outputs)
         # get final states based on the source states list.
         output, Tstate = TL_get_final_output(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list, output_list, input_)
         # output, Tstate = TL_get_final_output2(w_h, w_s, w_b, w_t_h, Toutput, w_t_s, w_t_b, Tstate, state_list,
@@ -1494,8 +1507,13 @@ def static_lstm_rnn(session,
 
 
 def TL_get_source_states(model_path, model_source, session, input_, state, sequence_length, time, min_sequence_length,
-                         max_sequence_length, zero_output, state_list, output_list):
+                         max_sequence_length, zero_output, state_list, output_list, Toutput):
     model_source.saver.restore(session, model_path)
+    # print(input_)
+    # step_loss, loss_summary, output_data = model_source.step(session, input_, Toutput,
+    #                                                   forward_only=True)
+    # Soutput = output_data
+    # Sstate = output_data
 
     call_cell_source = lambda: model_source.cell(input_, state)
     (Soutput, Sstate) = cal_out_state(sequence_length, time, min_sequence_length, max_sequence_length,
@@ -1514,12 +1532,13 @@ def TL_get_source_states(model_path, model_source, session, input_, state, seque
     # print("shape of e_s_t")
     # print(e_s_t)
 
-    state_list.append(Sstate)
-    output_list.append(Soutput)
+    # state_list.append(Sstate)
+    # output_list.append(Soutput)
     # e_h.append(e_h_t)
     # e_s.append(e_s_t)
 
-    return state_list, output_list
+    # return state_list, output_list
+    return Sstate, Soutput
 
     # target--put the target to the last ----:
 

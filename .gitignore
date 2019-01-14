@@ -2,4 +2,5 @@ data/
 model/train/
 summaries_dir/
 summaries_dir/*
-.idea/
+.idea/*
+./source_datas/*

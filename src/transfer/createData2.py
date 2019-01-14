@@ -38,10 +38,33 @@ def create_original_data(start=0, stop=100, num=1000, w=1, mu=0, sigma=0.03):
     # plt.show()
 
 
+def create_original_data_2(start=0, stop=100, num=1000, w=1, mu=0, sigma=0.03):
+    print('create original data 2')
+    seq_train = w * np.sin(np.linspace(start=start, stop=stop, num=num, dtype=np.float32)) + w * np.cos(
+        np.linspace(start=start, stop=stop, num=num, dtype=np.float32))
+    sample_no = num
+    np.random.seed(0)
+    s = np.random.normal(mu, sigma, sample_no)
+
+    seq_train = seq_train + s
+    return seq_train
+
+
+def create_original_data_3(start=0, stop=100, num=1000, w=1, mu=0, sigma=0.03):
+    print('create original data 3')
+    seq_train = w * np.sin(np.linspace(start=start, stop=stop, num=num, dtype=np.float32)) + w * np.sin(
+        np.linspace(start=start, stop=stop*4, num=num, dtype=np.float32))
+    sample_no = num
+    np.random.seed(0)
+    s = np.random.normal(mu, sigma, sample_no)
+
+    seq_train = seq_train + s
+    return seq_train
+
 
 def draw_data(draw_datas, data_len, file_name):
     data_dir = '../../data/'
-    data_dir = os.path.join(data_dir, file_name+'.pdf')
+    data_dir = os.path.join(data_dir, file_name + '.pdf')
     f = plt.figure()
     plt.plot(range(data_len), draw_datas, "r*")
     plt.show()
@@ -99,9 +122,9 @@ def read_data(file_name):
 
 
 if __name__ == '__main__':
-
-    train_data = create_original_data(start=0, stop=12.56, num=252, w=1, mu=0, sigma=0.02)
-    file_name = 'data_period20_w1_mu0_sigma002'
+    # train_data = create_original_data(start=0, stop=12.56, num=1884, w=1, mu=0, sigma=0.03)
+    train_data = create_original_data_3(start=0, stop=12.56, num=1884, w=1, mu=0, sigma=0.3)
+    file_name = 'data_period150_w1_mu0_sigma03'
     save_original_data(file_name, train_data)
     read_data = read_original_data(file_name)
     print(read_data)
